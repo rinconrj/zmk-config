@@ -20,13 +20,14 @@
 };
 
 &pwm0 {
-    compatible = "nordic,nrf-spim";
     status = "okay";
-
     pinctrl-0 = <&pwm0_default>;
     pinctrl-1 = <&pwm0_sleep>;
     pinctrl-names = "default", "sleep";
 
+};
+
+/ {
     backlight: pwmleds {
         compatible = "pwm-leds";
         pwm_led_0: pwm_led_0 {
@@ -40,7 +41,6 @@
         };
     };
 };
-
 / {
     chosen {
         zmk,backlight = &backlight;
