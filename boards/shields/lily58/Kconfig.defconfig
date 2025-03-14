@@ -133,7 +133,7 @@ config BT_MAX_PAIRED
 endif
 
 #ZMK_BLE
-
+endif
 
 if ZMK_BACKLIGHT
 
