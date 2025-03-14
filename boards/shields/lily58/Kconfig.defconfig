@@ -144,3 +144,13 @@ config LED_PWM
     default y
 
 endif # ZMK_BACKLIGHT
+
+# UART for ZMK Studio RPC
+config UART_ASYNC_API
+    default y
+
+config UART_ASYNC_TX_RING_BUFFER_SIZE
+    default 256
+
+config UART_ASYNC_RX_RING_BUFFER_SIZE
+    default 256
