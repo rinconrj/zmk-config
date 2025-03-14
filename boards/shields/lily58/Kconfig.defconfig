@@ -1,55 +1,139 @@
+# Copyright (c) 2024 The ZMK Contributors
+# SPDX-License-Identifier: MIT
 
-if SHIELD_LILY58_LEFT || SHIELD_LILY58_DONGLE_XIAO || SHIELD_LILY58_DONGLE_PRO_MICRO
+# HID
+if ZMK_HID_REPORT_TYPE_HKRO
 
-config ZMK_KEYBOARD_NAME
-    default "Lily58"
-
-config ZMK_SPLIT_ROLE_CENTRAL
-    default y
-
-endif
-
-if SHIELD_LILY58_LEFT || SHIELD_LILY58_RIGHT || SHIELD_LILY58_LEFT_PERIPHERAL || SHIELD_LILY58_DONGLE_XIAO || SHIELD_LILY58_DONGLE_PRO_MICRO
-
-config ZMK_SPLIT
-    default y
-
-if ZMK_DISPLAY
-
-config I2C
-    default y
-
-config SSD1306
-    default y
-
-if SHIELD_LILY58_DONGLE_XIAO || SHIELD_LILY58_DONGLE_PRO_MICRO
-
-choice ZMK_DISPLAY_WORK_QUEUE
-    default ZMK_DISPLAY_WORK_QUEUE_DEDICATED
-endchoice
+config ZMK_HID_KEYBOARD_REPORT_SIZE
+    default 6
 
 endif
 
-endif # ZMK_DISPLAY
+config ZMK_HID_CONSUMER_REPORT_SIZE
+    default 6
 
-if LVGL
+# Behaviors
 
-config LV_Z_VDB_SIZE
-    default 64
+if ZMK_BEHAVIOR_HOLD_TAP
 
-config LV_DPI_DEF
-    default 148
+config ZMK_BEHAVIOR_HOLD_TAP_MAX_HELD
+    default 10
 
-config LV_Z_BITS_PER_PIXEL
+config ZMK_BEHAVIOR_HOLD_TAP_MAX_CAPTURED_EVENTS
+    default 40
+
+endif
+
+if ZMK_BEHAVIOR_STICKY_KEY
+
+config ZMK_BEHAVIOR_STICKY_KEY_MAX_HELD
+    default 10
+
+endif
+
+if ZMK_BEHAVIOR_TAP_DANCE
+
+config ZMK_BEHAVIOR_TAP_DANCE_MAX_HELD
+    default 10
+
+endif
+
+# Underglow
+if ZMK_RGB_UNDERGLOW
+
+# This default value cuts down on tons of excess .conf files, if you're using GPIO, manually disable this
+config SPI
+    default y
+
+config ZMK_RGB_UNDERGLOW_EXT_POWER
+    default y
+
+config ZMK_RGB_UNDERGLOW_BRT_MIN
+    default 0
+
+config ZMK_RGB_UNDERGLOW_BRT_MAX
+    default 100
+
+config ZMK_RGB_UNDERGLOW_HUE_STEP
+    default 10
+
+config ZMK_RGB_UNDERGLOW_SAT_STEP
+    default 10
+
+config ZMK_RGB_UNDERGLOW_BRT_STEP
+    default 10
+
+config ZMK_RGB_UNDERGLOW_HUE_START
+    default 0
+
+config ZMK_RGB_UNDERGLOW_SAT_START
+    default 100
+
+config ZMK_RGB_UNDERGLOW_BRT_START
+    default ZMK_RGB_UNDERGLOW_BRT_MAX
+
+config ZMK_RGB_UNDERGLOW_SPD_START
+    default 3
+
+config ZMK_RGB_UNDERGLOW_EFF_START
+    default 0
+
+config ZMK_RGB_UNDERGLOW_ON_START
+    default y
+
+endif # ZMK_RGB_UNDERGLOW
+
+# Backlight
+if ZMK_BACKLIGHT
+
+config ZMK_BACKLIGHT_BRT_STEP
+    default 20
+
+config ZMK_BACKLIGHT_BRT_START
+    default 40
+
+config ZMK_BACKLIGHT_ON_START
+    default y
+
+endif # ZMK_BACKLIGHT
+
+# Ext_power
+config ZMK_EXT_POWER
+    default y
+
+# Battery
+config ZMK_BATTERY_REPORT_INTERVAL
+    default 60
+
+if ZMK_BLE
+
+if ZMK_SPLIT_BLE && ZMK_SPLIT_ROLE_CENTRAL
+
+config ZMK_SPLIT_BLE_CENTRAL_PERIPHERALS
     default 1
 
-choice LV_COLOR_DEPTH
-    default LV_COLOR_DEPTH_1
-endchoice
+config BT_MAX_CONN
+    default 6
 
-endif # LVGL
+config BT_MAX_PAIRED
+    default 6
 
+#ZMK_SPLIT_BLE && ZMK_SPLIT_ROLE_CENTRAL
 endif
+
+if !ZMK_SPLIT_BLE
+
+config BT_MAX_CONN
+    default 5
+
+config BT_MAX_PAIRED
+    default 5
+
+#!ZMK_SPLIT_BLE
+endif
+
+#ZMK_BLE
+
 
 if ZMK_BACKLIGHT
 
